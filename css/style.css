@@ -474,3 +474,23 @@ img { max-width: 100%; display: block; }
 .btn-ghost { background: transparent; color: var(--primary); border: 2px solid var(--primary); }
 @media (max-width: 640px) { .partner-card { flex-direction: column; text-align: center; padding: 22px; }
   .partner-facts li { text-align: right; } .partner-links { justify-content: center; } }
+
+/* ----- اختيار الأصناف في نموذج الطلب ----- */
+.picker-row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 8px; }
+.picker-row > input[type="search"] { flex: 1 1 220px; min-width: 0; }
+.picker-row > select { flex: 0 1 160px; }
+#pickItem { margin-bottom: 8px; }
+.picker-add { align-items: center; }
+.picker-add .qty-label { margin: 0; font-weight: 600; }
+.picker-add #pickQty { width: 90px; flex: none; text-align: center; }
+.picked { display: grid; gap: 6px; margin-top: 6px; }
+.picked li { display: flex; align-items: center; gap: 8px; background: var(--bg-alt); border: 1px solid var(--border);
+  border-radius: 10px; padding: 6px 10px; }
+.picked .p-txt { flex: 1; min-width: 0; font-size: .95rem; line-height: 1.5; }
+.picked .p-txt small { display: block; color: var(--muted); direction: ltr; text-align: right; }
+.picked input { width: 70px !important; text-align: center; padding: 4px 6px !important; }
+.picked .p-del { background: none; border: 0; color: #dc2626; font-size: 1.3rem; cursor: pointer; line-height: 1; padding: 0 4px; }
+.picked-empty { color: var(--muted); font-size: .9rem; margin-top: 4px; }
+.picker.invalid-box #pickItem, .picker.invalid-box #pickSearch { border-color: #dc2626; }
+.form-group .picker-row > input[type="search"], .form-group .picker-row > select { width: auto; }
+@media (max-width: 480px) { .form-group .picker-row > select { flex: 1 1 100%; } }
