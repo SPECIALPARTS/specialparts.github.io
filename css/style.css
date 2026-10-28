@@ -460,3 +460,17 @@ img { max-width: 100%; display: block; }
 .p-real-strip img { height: 260px; width: auto; max-width: none; border-radius: var(--radius); box-shadow: var(--shadow); scroll-snap-align: start; background: #fff; }
 @media (max-width: 560px) { .p-real-strip img { height: 200px; } }
 .footer-bottom .legal { font-size: .8rem; opacity: .75; margin-top: 4px; }
+
+/* ----- شركاء النجاح ----- */
+.partner-card { display: flex; gap: 28px; align-items: center; background: #fff; border: 1px solid var(--border);
+  border-radius: var(--radius); box-shadow: var(--shadow); padding: 28px; max-width: 900px; margin: 0 auto; }
+.partner-logo { width: 110px; height: 110px; border-radius: 50%; border: 3px solid #c8a96a; flex: none; object-fit: cover; }
+.partner-body { min-width: 0; }
+.partner-body h3 { font-size: 1.35rem; color: var(--primary-dark); margin-bottom: 4px; }
+.partner-sub { color: var(--muted); margin-bottom: 12px; }
+.partner-facts li { position: relative; padding-right: 22px; margin-bottom: 6px; }
+.partner-facts li::before { content: "✓"; position: absolute; right: 0; color: var(--primary); font-weight: 800; }
+.partner-links { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 14px; }
+.btn-ghost { background: transparent; color: var(--primary); border: 2px solid var(--primary); }
+@media (max-width: 640px) { .partner-card { flex-direction: column; text-align: center; padding: 22px; }
+  .partner-facts li { text-align: right; } .partner-links { justify-content: center; } }
