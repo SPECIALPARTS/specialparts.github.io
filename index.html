@@ -422,7 +422,7 @@
           <!-- نموذج طلب سريع -->
           <form class="contact-form" id="contactForm" novalidate>
             <h3 class="form-title">اطلب عرض سعر في أقل من دقيقة</h3>
-            <p class="form-hint">اكتب بياناتك والأصناف، والطلب هيتبعت لنا على واتساب على طول.</p>
+            <p class="form-hint">اكتب بياناتك واختار الأصناف والكمية، والطلب هيتبعت لنا على واتساب على طول.</p>
             <div class="form-row">
               <div class="form-group">
                 <label for="name">الاسم <span class="req">*</span></label>
@@ -457,9 +457,29 @@
                 </select>
               </div>
             </div>
+            <div class="form-group picker" id="picker">
+              <label for="pickSearch">الأصناف المطلوبة <span class="req">*</span></label>
+              <div class="picker-row">
+                <input type="search" id="pickSearch" placeholder="دوّر باسم الصنف أو رقمه… مثال: CH1321 أو برميل" autocomplete="off">
+                <select id="pickBrand" aria-label="الماركة">
+                  <option value="">كل الماركات</option>
+                  <option>SAMPIYON</option>
+                  <option>Eurostar</option>
+                  <option>HYGT</option>
+                </select>
+              </div>
+              <select id="pickItem" aria-label="اختار الصنف"></select>
+              <div class="picker-row picker-add">
+                <label for="pickQty" class="qty-label">الكمية</label>
+                <input type="number" id="pickQty" min="1" value="1" inputmode="numeric">
+                <button type="button" class="btn btn-sm" id="pickAdd">+ ضيف للطلب</button>
+              </div>
+              <ul class="picked" id="pickedList" aria-live="polite"></ul>
+              <p class="picked-empty" id="pickedEmpty">لسه ما اخترتش أصناف.</p>
+            </div>
             <div class="form-group">
-              <label for="message">الأصناف أو الاستفسار <span class="req">*</span></label>
-              <textarea id="message" name="message" rows="4" placeholder="مثال: 10 فلتر هواء مرسيدس أكتروس CH1321" required></textarea>
+              <label for="message">ملاحظات أو أصناف مش موجودة في القايمة</label>
+              <textarea id="message" name="message" rows="3" placeholder="مثال: محتاج فلتر جاز لموديل معين، أو أي استفسار"></textarea>
             </div>
             <button type="submit" class="btn btn-block btn-whatsapp btn-icon"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 3a13 13 0 00-11.2 19.6L3 29l6.6-1.7A13 13 0 1016 3zm0 23.6a10.6 10.6 0 01-5.4-1.5l-.4-.2-3.9 1 1-3.8-.3-.4A10.6 10.6 0 1116 26.6zm5.8-7.9c-.3-.2-1.9-.9-2.2-1s-.5-.2-.7.2-.8 1-1 1.2-.4.2-.7.1a8.7 8.7 0 01-4.3-3.8c-.3-.6.3-.5.9-1.7a.6.6 0 000-.5l-1-2.4c-.3-.6-.5-.5-.7-.5h-.6a1.2 1.2 0 00-.9.4 3.6 3.6 0 00-1.1 2.7 6.3 6.3 0 001.3 3.3 14.4 14.4 0 005.5 4.9c2 .9 2.8.9 3.9.8a3.3 3.3 0 002.1-1.5 2.7 2.7 0 00.2-1.5c-.1-.2-.3-.3-.7-.5z"/></svg> إرسال الطلب على واتساب</button>
             <p class="form-status" id="formStatus" role="status"></p>
@@ -519,6 +539,7 @@
   </div>
 
   <!-- ملف الجافاسكريبت -->
+  <script src="js/items-data.js"></script>
   <script src="js/main.js"></script>
 </body>
 </html>
