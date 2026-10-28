@@ -2,7 +2,20 @@
 // سبشيال بارتس - ملف الجافاسكريبت الرئيسي
 // =========================================
 
+// ----- تتبّع Meta Pixel (بيشتغل بس لو رقم البكسل متحط في index.html) -----
+function trackPixel(eventName, params) {
+  if (typeof window.fbq === "function") window.fbq("track", eventName, params || {});
+}
+
 document.addEventListener("DOMContentLoaded", () => {
+  // ضغطة على أي زرار واتساب أو رقم تليفون = تواصل (Contact)
+  document.querySelectorAll('a[href*="wa.me"]').forEach((a) =>
+    a.addEventListener("click", () => trackPixel("Contact", { method: "whatsapp" }))
+  );
+  document.querySelectorAll('a[href^="tel:"]').forEach((a) =>
+    a.addEventListener("click", () => trackPixel("Contact", { method: "phone" }))
+  );
+
   // ----- قائمة الموبايل -----
   const toggle = document.querySelector(".nav-toggle");
   const nav = document.querySelector(".main-nav");
@@ -82,6 +95,9 @@ document.addEventListener("DOMContentLoaded", () => {
         `الموبايل: ${phone}\n` +
         `المحافظة: ${form.city.value || "غير محدد"}\n\n` +
         `${message}`;
+
+      // إرسال طلب من النموذج = عميل محتمل (Lead)
+      trackPixel("Lead", { content_name: form.type.value });
 
       window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`, "_blank", "noopener");
 
