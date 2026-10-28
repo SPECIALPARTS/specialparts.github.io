@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://specialparts.github.io/sitemap.xml
