@@ -20,6 +20,7 @@
 /* ----- إعادة الضبط ----- */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
+section[id] { scroll-margin-top: 80px; }
 body {
   font-family: "Cairo", system-ui, sans-serif;
   color: var(--text);
@@ -253,23 +254,98 @@ img { max-width: 100%; display: block; }
 .form-status.success { color: #15803d; }
 .form-status.error { color: #dc2626; }
 
-/* ----- زرار واتساب الثابت ----- */
-.wa-float {
-  position: fixed; bottom: 20px; left: 20px; z-index: 200;
-  width: 58px; height: 58px; border-radius: 50%;
-  background: #25d366; display: grid; place-items: center;
-  box-shadow: 0 6px 18px rgba(0,0,0,.25); transition: transform .2s;
+/* ----- حالة المحل (مفتوح/مقفول) ----- */
+.open-status {
+  display: inline-flex; align-items: center; gap: 8px; margin-top: 14px;
+  padding: 6px 16px; border-radius: 999px; font-weight: 700; font-size: .95rem;
 }
-.wa-float:hover { transform: scale(1.08); }
-.wa-float svg { width: 32px; height: 32px; fill: #fff; }
+.open-status:empty { display: none; }
+.open-status::before { content: ""; width: 10px; height: 10px; border-radius: 50%; background: currentColor; }
+.open-status.is-open { background: #dcfce7; color: #15803d; }
+.open-status.is-closed { background: #fee2e2; color: #b91c1c; }
+
+/* ----- طرق التواصل السريعة ----- */
+.quick-contact { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 32px; }
+.qc-card {
+  display: flex; align-items: center; gap: 14px; padding: 18px 20px;
+  background: #fff; border-radius: var(--radius); box-shadow: var(--shadow);
+  border: 2px solid transparent; transition: transform .2s, border-color .2s;
+}
+.qc-card:hover { transform: translateY(-3px); border-color: currentColor; }
+.qc-icon { flex-shrink: 0; width: 50px; height: 50px; border-radius: 14px; display: grid; place-items: center; color: #fff; }
+.qc-icon svg { width: 26px; height: 26px; }
+.qc-whatsapp { color: #128c3e; } .qc-whatsapp .qc-icon { background: #25d366; } .qc-whatsapp svg { fill: #fff; }
+.qc-call { color: var(--primary); } .qc-call .qc-icon { background: var(--primary); }
+.qc-map { color: #c2410c; } .qc-map .qc-icon { background: var(--accent); }
+.qc-call svg, .qc-map svg { fill: none; stroke: #fff; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.qc-text strong { display: block; font-size: 1.1rem; color: var(--text); }
+.qc-text small { color: var(--muted); font-size: .9rem; }
+
+.form-title { color: var(--primary); font-size: 1.25rem; margin-bottom: 4px; }
+.form-hint { color: var(--muted); font-size: .95rem; margin-bottom: 18px; }
+.req { color: #dc2626; }
+.btn-icon { display: inline-flex; align-items: center; justify-content: center; gap: 10px; font-size: 1.05rem; padding: 14px; }
+.btn-icon svg { width: 22px; height: 22px; fill: #fff; }
+.info-item small { color: #b9c8ee; }
+
+/* ----- زرار واتساب العائم ----- */
+.wa-widget {
+  position: fixed; bottom: 22px; left: 22px; z-index: 200;
+  display: flex; flex-direction: column; align-items: flex-end; gap: 12px;
+}
+.wa-float {
+  position: relative; display: flex; align-items: center; gap: 10px;
+  height: 60px; min-width: 60px; padding: 0 14px; border-radius: 999px;
+  background: linear-gradient(135deg, #25d366, #128c3e); color: #fff;
+  box-shadow: 0 10px 25px rgba(18,140,62,.45);
+  animation: wa-enter .6s cubic-bezier(.2,1.4,.4,1) .8s both, wa-wiggle 6s ease-in-out 3s infinite;
+  transition: transform .2s, box-shadow .2s;
+}
+.wa-float:hover { transform: translateY(-3px) scale(1.04); box-shadow: 0 14px 30px rgba(18,140,62,.55); }
+.wa-float svg { position: relative; z-index: 1; width: 32px; height: 32px; fill: #fff; flex-shrink: 0; }
+.wa-label { position: relative; z-index: 1; font-weight: 700; white-space: nowrap; padding-inline-end: 4px; }
+.wa-pulse {
+  position: absolute; inset: 0; border-radius: inherit; background: #25d366;
+  animation: wa-pulse 2.4s ease-out infinite; z-index: 0;
+}
+.wa-pulse-2 { animation-delay: 1.2s; }
+
+.wa-bubble {
+  position: relative; max-width: 260px; padding: 14px 16px 14px 34px;
+  background: #fff; color: var(--text); border-radius: 16px 16px 16px 4px;
+  box-shadow: 0 10px 30px rgba(0,0,0,.18); font-size: .92rem; line-height: 1.6;
+  opacity: 0; transform: translateY(10px) scale(.95); pointer-events: none;
+  transition: opacity .35s, transform .35s;
+}
+.wa-bubble.show { opacity: 1; transform: none; pointer-events: auto; }
+.wa-bubble strong { display: block; color: #128c3e; margin-bottom: 2px; }
+.wa-bubble-close {
+  position: absolute; top: 6px; left: 8px; width: 24px; height: 24px;
+  border: 0; background: none; font-size: 1.2rem; line-height: 1; color: var(--muted); cursor: pointer;
+}
+
+@keyframes wa-pulse { 0% { transform: scale(1); opacity: .55; } 100% { transform: scale(1.6); opacity: 0; } }
+@keyframes wa-enter { from { opacity: 0; transform: translateY(40px) scale(.6); } to { opacity: 1; transform: none; } }
+@keyframes wa-wiggle {
+  0%, 90%, 100% { rotate: 0deg; } 92% { rotate: -8deg; } 94% { rotate: 8deg; } 96% { rotate: -5deg; } 98% { rotate: 5deg; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .wa-float, .wa-pulse { animation: none; }
+  .wa-bubble { transition: none; }
+}
 
 /* ----- التجاوب مع الشاشات الصغيرة ----- */
 @media (max-width: 900px) {
   .contact-grid { grid-template-columns: 1fr; }
+  .quick-contact { grid-template-columns: 1fr; gap: 12px; }
 }
 @media (max-width: 560px) {
   .form-row { grid-template-columns: 1fr; gap: 0; }
   .contact-info, .contact-form { padding: 24px; }
+  .wa-widget { bottom: 16px; left: 16px; }
+  .wa-label { display: none; }
+  .wa-float { width: 60px; padding: 0; justify-content: center; }
+  .wa-bubble { max-width: 250px; font-size: .88rem; }
 }
 @media (max-width: 900px) {
   .hero-inner { grid-template-columns: 1fr; }
