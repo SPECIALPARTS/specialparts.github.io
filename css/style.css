@@ -454,3 +454,8 @@ img { max-width: 100%; display: block; }
 .center-cta { text-align: center; margin-top: 32px; }
 .p-chips { display: inline-flex; flex-wrap: wrap; gap: 4px; vertical-align: middle; }
 .p-chips i { font-style: normal; font-size: .75rem; background: var(--bg-alt); border: 1px solid var(--border); border-radius: 6px; padding: 0 6px; line-height: 1.7; }
+.p-real { margin-bottom: 30px; }
+.p-real h3 { font-size: 1.15rem; margin-bottom: 12px; padding-right: 12px; border-right: 4px solid var(--accent); }
+.p-real-strip { display: flex; gap: 12px; overflow-x: auto; padding-bottom: 8px; scroll-snap-type: x mandatory; }
+.p-real-strip img { height: 260px; width: auto; max-width: none; border-radius: var(--radius); box-shadow: var(--shadow); scroll-snap-align: start; background: #fff; }
+@media (max-width: 560px) { .p-real-strip img { height: 200px; } }
