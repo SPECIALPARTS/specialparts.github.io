@@ -422,7 +422,7 @@
           <!-- نموذج طلب سريع -->
           <form class="contact-form" id="contactForm" novalidate>
             <h3 class="form-title">اطلب عرض سعر في أقل من دقيقة</h3>
-            <p class="form-hint">اكتب بياناتك واختار الأصناف والكمية، والطلب هيتبعت لنا على واتساب على طول.</p>
+            <p class="form-hint">اعمل طلبيتك: اكتب الكمية قدام كل صنف محتاجه من أي ماركة، والطلبية هتتبعت لنا على واتساب على طول.</p>
             <div class="form-row">
               <div class="form-group">
                 <label for="name">الاسم <span class="req">*</span></label>
@@ -448,34 +448,34 @@
                 </select>
               </div>
               <div class="form-group">
-                <label for="type">نوع الطلب</label>
-                <select id="type" name="type">
-                  <option>عرض سعر</option>
-                  <option>استفسار عن منتج</option>
-                  <option>طلب أن أصبح عميلًا (تاجر)</option>
-                  <option>أخرى</option>
-                </select>
+                <label for="address">العنوان / المكان</label>
+                <input type="text" id="address" name="address" placeholder="مثال: ملوي – شارع المحطة" autocomplete="street-address">
               </div>
             </div>
+            <div class="form-group">
+              <label for="type">نوع الطلب</label>
+              <select id="type" name="type">
+                <option>عرض سعر</option>
+                <option>استفسار عن منتج</option>
+                <option>طلب أن أصبح عميلًا (تاجر)</option>
+                <option>أخرى</option>
+              </select>
+            </div>
             <div class="form-group picker" id="picker">
-              <label for="pickSearch">الأصناف المطلوبة <span class="req">*</span></label>
-              <div class="picker-row">
-                <input type="search" id="pickSearch" placeholder="دوّر باسم الصنف أو رقمه… مثال: CH1321 أو برميل" autocomplete="off">
-                <select id="pickBrand" aria-label="الماركة">
-                  <option value="">كل الماركات</option>
-                  <option>SAMPIYON</option>
-                  <option>Eurostar</option>
-                  <option>HYGT</option>
-                </select>
+              <span class="picker-label">الأصناف المطلوبة <span class="req">*</span></span>
+              <div class="brand-tabs" role="tablist" aria-label="الماركة">
+                <button type="button" class="brand-tab is-active" data-brand="SAMPIYON" role="tab" aria-selected="true">SAMPIYON</button>
+                <button type="button" class="brand-tab" data-brand="Eurostar" role="tab" aria-selected="false">Eurostar</button>
+                <button type="button" class="brand-tab" data-brand="HYGT" role="tab" aria-selected="false">HYGT</button>
               </div>
-              <select id="pickItem" aria-label="اختار الصنف"></select>
-              <div class="picker-row picker-add">
-                <label for="pickQty" class="qty-label">الكمية</label>
-                <input type="number" id="pickQty" min="1" value="1" inputmode="numeric">
-                <button type="button" class="btn btn-sm" id="pickAdd">+ ضيف للطلب</button>
+              <input type="search" id="pickSearch" class="pick-search" placeholder="دوّر باسم الصنف أو رقمه… مثال: CH1321 أو برميل" autocomplete="off" aria-label="بحث في الأصناف">
+              <div class="pick-head"><span>الصنف</span><span>الكمية</span></div>
+              <ul class="pick-list" id="pickList"></ul>
+              <p class="pick-summary" id="pickSummary" aria-live="polite">اكتب الكمية قدام الأصناف اللي محتاجها.</p>
+              <div class="order-box" id="orderBox" hidden>
+                <strong>طلبيتك:</strong>
+                <ol id="orderList"></ol>
               </div>
-              <ul class="picked" id="pickedList" aria-live="polite"></ul>
-              <p class="picked-empty" id="pickedEmpty">لسه ما اخترتش أصناف.</p>
             </div>
             <div class="form-group">
               <label for="message">ملاحظات أو أصناف مش موجودة في القايمة</label>
