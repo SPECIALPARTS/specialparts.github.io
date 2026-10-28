@@ -51,13 +51,13 @@ document.addEventListener("DOMContentLoaded", () => {
       const open = !isFriday && hour >= OPEN_HOUR && hour < CLOSE_HOUR;
       statusEl.className = "open-status " + (open ? "is-open" : "is-closed");
       if (open) {
-        statusEl.textContent = "مفتوحين دلوقتي · لحد 6 المغرب";
+        statusEl.textContent = "مفتوح الآن · حتى 6 مساءً";
       } else if (isFriday || (day === "Thu" && hour >= CLOSE_HOUR)) {
-        statusEl.textContent = "مقفولين دلوقتي · بنفتح السبت 10 الصبح — سيب رسالة على واتساب";
+        statusEl.textContent = "مغلق الآن · نفتح السبت 10 صباحًا – اترك رسالة على واتساب";
       } else if (hour < OPEN_HOUR) {
-        statusEl.textContent = "مقفولين دلوقتي · بنفتح النهارده 10 الصبح";
+        statusEl.textContent = "مغلق الآن · نفتح اليوم 10 صباحًا";
       } else {
-        statusEl.textContent = "مقفولين دلوقتي · بنفتح بكره 10 الصبح — سيب رسالة على واتساب";
+        statusEl.textContent = "مغلق الآن · نفتح غدًا 10 صباحًا – اترك رسالة على واتساب";
       }
     };
     updateStatus();
