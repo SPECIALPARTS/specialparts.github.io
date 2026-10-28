@@ -108,6 +108,74 @@ document.addEventListener("DOMContentLoaded", () => {
     sections.forEach((s) => observer.observe(s));
   }
 
+
+  // ----- اختيار الأصناف والكمية في نموذج الطلب -----
+  const picked = []; // {label, code, qty}
+  const pSearch = document.getElementById("pickSearch");
+  const pBrand = document.getElementById("pickBrand");
+  const pItem = document.getElementById("pickItem");
+  const pQty = document.getElementById("pickQty");
+  const pAdd = document.getElementById("pickAdd");
+  const pList = document.getElementById("pickedList");
+  const pEmpty = document.getElementById("pickedEmpty");
+  const ITEMS = window.SP_ITEMS || [];
+  const normAr = (t) => (t || "").toLowerCase()
+    .replace(/[أإآ]/g, "ا").replace(/ة/g, "ه").replace(/ى/g, "ي").replace(/\s+/g, "");
+
+  function fillItems() {
+    if (!pItem) return;
+    const q = normAr(pSearch.value), b = pBrand.value;
+    pItem.innerHTML = "";
+    const first = document.createElement("option");
+    first.value = ""; pItem.appendChild(first);
+    let count = 0; const groups = {};
+    ITEMS.forEach((it, i) => {
+      if (b && it.b !== b) return;
+      if (q && !normAr(it.n + it.c + it.b + it.g).includes(q)) return;
+      const key = it.b + " – " + (it.g || "أصناف");
+      if (!groups[key]) { groups[key] = document.createElement("optgroup"); groups[key].label = key; pItem.appendChild(groups[key]); }
+      const o = document.createElement("option");
+      o.value = i; o.textContent = it.n + (it.c ? "  (" + it.c + ")" : "");
+      groups[key].appendChild(o); count++;
+    });
+    first.textContent = count ? `اختار الصنف (${count} صنف)` : "مفيش صنف بالاسم ده – اكتبه في الملاحظات تحت";
+  }
+
+  function renderPicked() {
+    pList.innerHTML = "";
+    picked.forEach((p, idx) => {
+      const li = document.createElement("li");
+      const txt = document.createElement("span"); txt.className = "p-txt";
+      txt.textContent = p.label;
+      if (p.code) { const sm = document.createElement("small"); sm.textContent = p.code; txt.appendChild(sm); }
+      const q = document.createElement("input");
+      q.type = "number"; q.min = "1"; q.value = p.qty; q.setAttribute("aria-label", "الكمية");
+      q.addEventListener("input", () => { p.qty = Math.max(1, parseInt(q.value, 10) || 1); });
+      const del = document.createElement("button");
+      del.type = "button"; del.className = "p-del"; del.textContent = "×"; del.setAttribute("aria-label", "شيل الصنف");
+      del.addEventListener("click", () => { picked.splice(idx, 1); renderPicked(); });
+      li.append(txt, q, del); pList.appendChild(li);
+    });
+    pEmpty.hidden = picked.length > 0;
+  }
+
+  if (pItem) {
+    fillItems();
+    pSearch.addEventListener("input", fillItems);
+    pBrand.addEventListener("change", fillItems);
+    pAdd.addEventListener("click", () => {
+      const it = ITEMS[pItem.value];
+      if (!it) { pItem.focus(); return; }
+      const qty = Math.max(1, parseInt(pQty.value, 10) || 1);
+      const existing = picked.find((p) => p.idx === Number(pItem.value));
+      if (existing) existing.qty += qty;
+      else picked.push({ idx: Number(pItem.value), label: it.b + " – " + it.n, code: it.c, qty });
+      document.getElementById("picker").classList.remove("invalid-box");
+      pQty.value = 1; pItem.value = ""; renderPicked();
+    });
+    renderPicked();
+  }
+
   // ----- نموذج التواصل -----
   // النموذج يفتح واتساب على رقم الشركة والرسالة مكتوبة جاهزة.
   const form = document.getElementById("contactForm");
@@ -127,13 +195,18 @@ document.addEventListener("DOMContentLoaded", () => {
       const errors = [];
       if (!name) errors.push(form.name);
       if (!/^01[0125]\d{8}$/.test(phone.replace(/\s/g, ""))) errors.push(form.phone);
-      if (!message) errors.push(form.message);
+      const pickerBox = document.getElementById("picker");
+      if (pickerBox) pickerBox.classList.remove("invalid-box");
+      if (!message && !picked.length) {
+        if (pickerBox) { pickerBox.classList.add("invalid-box"); errors.push(pSearch); }
+        else errors.push(form.message);
+      }
 
       if (errors.length) {
         errors.forEach((el) => el.classList.add("invalid"));
         errors[0].focus();
         status.className = "form-status error";
-        status.textContent = "من فضلك اكتب الاسم ورقم موبايل صحيح (11 رقم) والرسالة.";
+        status.textContent = "من فضلك اكتب الاسم ورقم موبايل صحيح (11 رقم)، واختار صنف واحد على الأقل أو اكتب استفسارك.";
         return;
       }
 
@@ -142,7 +215,10 @@ document.addEventListener("DOMContentLoaded", () => {
         `الاسم: ${name}\n` +
         `الموبايل: ${phone}\n` +
         `المحافظة: ${form.city.value || "غير محدد"}\n\n` +
-        `${message}`;
+        (picked.length
+          ? "*الأصناف المطلوبة:*\n" + picked.map((p, i) => `${i + 1}) ${p.label}${p.code ? " (" + p.code + ")" : ""} — الكمية: ${p.qty}`).join("\n") + "\n\n"
+          : "") +
+        (message ? `ملاحظات: ${message}` : "");
 
       // إرسال طلب من النموذج = عميل محتمل (Lead)
       trackPixel("Lead", { content_name: form.type.value });
@@ -152,6 +228,7 @@ document.addEventListener("DOMContentLoaded", () => {
       status.className = "form-status success";
       status.textContent = "تمام! اتفتح واتساب ورسالتك جاهزة، دوس إرسال من هناك.";
       form.reset();
+      picked.length = 0; if (pItem) { fillItems(); renderPicked(); }
     });
   }
 });
