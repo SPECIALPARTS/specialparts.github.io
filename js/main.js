@@ -112,6 +112,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // ----- قايمة الأصناف والكمية في نموذج الطلب -----
   // كل الأصناف ظاهرة حسب الماركة، والعميل يكتب الكمية قدام اللي محتاجه.
   const ITEMS = window.SP_ITEMS || [];
+  const BRAND_AR = { SAMPIYON: "شامبيون SAMPIYON", Eurostar: "يوروستار Eurostar", HYGT: "فتيس HYGT" };
   const qtys = {};           // رقم الصنف -> الكمية
   let curBrand = "SAMPIYON";
   const pList = document.getElementById("pickList");
@@ -145,7 +146,8 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     tabs.forEach((t) => {
       const n = list.filter((p) => p.it.b === t.dataset.brand).length;
-      t.innerHTML = t.dataset.brand + (n ? ` <span class="cnt">${n}</span>` : "");
+      if (!t.dataset.label) t.dataset.label = t.textContent.trim();
+      t.innerHTML = t.dataset.label + (n ? ` <span class="cnt">${n}</span>` : "");
     });
   }
   function renderList() {
@@ -156,7 +158,7 @@ document.addEventListener("DOMContentLoaded", () => {
     ITEMS.forEach((it, i) => {
       if (q) { if (!normAr(it.n + it.c + it.g + it.b).includes(q)) return; }
       else if (it.b !== curBrand) return;
-      const grp = (q ? it.b + " – " : "") + (it.g || "أصناف");
+      const grp = (q ? (BRAND_AR[it.b] || it.b) + " – " : "") + (it.g || "أصناف");
       if (grp !== lastGroup) {
         const g = document.createElement("li"); g.className = "pg"; g.textContent = grp; pList.appendChild(g); lastGroup = grp;
       }
