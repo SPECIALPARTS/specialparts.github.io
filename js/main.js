@@ -109,71 +109,87 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
 
-  // ----- اختيار الأصناف والكمية في نموذج الطلب -----
-  const picked = []; // {label, code, qty}
-  const pSearch = document.getElementById("pickSearch");
-  const pBrand = document.getElementById("pickBrand");
-  const pItem = document.getElementById("pickItem");
-  const pQty = document.getElementById("pickQty");
-  const pAdd = document.getElementById("pickAdd");
-  const pList = document.getElementById("pickedList");
-  const pEmpty = document.getElementById("pickedEmpty");
+  // ----- قايمة الأصناف والكمية في نموذج الطلب -----
+  // كل الأصناف ظاهرة حسب الماركة، والعميل يكتب الكمية قدام اللي محتاجه.
   const ITEMS = window.SP_ITEMS || [];
+  const qtys = {};           // رقم الصنف -> الكمية
+  let curBrand = "SAMPIYON";
+  const pList = document.getElementById("pickList");
+  const pSearch = document.getElementById("pickSearch");
+  const pSummary = document.getElementById("pickSummary");
+  const tabs = [...document.querySelectorAll(".brand-tab")];
   const normAr = (t) => (t || "").toLowerCase()
     .replace(/[أإآ]/g, "ا").replace(/ة/g, "ه").replace(/ى/g, "ي").replace(/\s+/g, "");
 
-  function fillItems() {
-    if (!pItem) return;
-    const q = normAr(pSearch.value), b = pBrand.value;
-    pItem.innerHTML = "";
-    const first = document.createElement("option");
-    first.value = ""; pItem.appendChild(first);
-    let count = 0; const groups = {};
-    ITEMS.forEach((it, i) => {
-      if (b && it.b !== b) return;
-      if (q && !normAr(it.n + it.c + it.b + it.g).includes(q)) return;
-      const key = it.b + " – " + (it.g || "أصناف");
-      if (!groups[key]) { groups[key] = document.createElement("optgroup"); groups[key].label = key; pItem.appendChild(groups[key]); }
-      const o = document.createElement("option");
-      o.value = i; o.textContent = it.n + (it.c ? "  (" + it.c + ")" : "");
-      groups[key].appendChild(o); count++;
-    });
-    first.textContent = count ? `اختار الصنف (${count} صنف)` : "مفيش صنف بالاسم ده – اكتبه في الملاحظات تحت";
+  function picked() {
+    return Object.keys(qtys).filter((k) => qtys[k] > 0).map((k) => ({ it: ITEMS[k], qty: qtys[k] }));
   }
-
-  function renderPicked() {
+  function updateSummary() {
+    const list = picked();
+    const pieces = list.reduce((a, p) => a + p.qty, 0);
+    pSummary.className = "pick-summary" + (list.length ? " ok" : "");
+    pSummary.textContent = list.length
+      ? `اخترت ${list.length} صنف (${pieces} قطعة)`
+      : "اكتب الكمية قدام الأصناف اللي محتاجها.";
+    const box = document.getElementById("orderBox"), ol = document.getElementById("orderList");
+    if (box) {
+      box.hidden = !list.length; ol.innerHTML = "";
+      list.forEach((p) => {
+        const li = document.createElement("li");
+        const nm = document.createElement("bdi"); nm.dir = "rtl"; nm.textContent = `${p.it.b} – ${p.it.n}`;
+        const cd = document.createElement("bdi"); cd.className = "oc"; cd.textContent = p.it.c || "";
+        const qt = document.createElement("b"); qt.className = "oq"; qt.textContent = `الكمية: ${p.qty}`;
+        li.append(nm, " ", cd, " ", qt);
+        ol.appendChild(li);
+      });
+    }
+    tabs.forEach((t) => {
+      const n = list.filter((p) => p.it.b === t.dataset.brand).length;
+      t.innerHTML = t.dataset.brand + (n ? ` <span class="cnt">${n}</span>` : "");
+    });
+  }
+  function renderList() {
+    if (!pList) return;
+    const q = normAr(pSearch.value);
     pList.innerHTML = "";
-    picked.forEach((p, idx) => {
+    let lastGroup = null, count = 0;
+    ITEMS.forEach((it, i) => {
+      if (q) { if (!normAr(it.n + it.c + it.g + it.b).includes(q)) return; }
+      else if (it.b !== curBrand) return;
+      const grp = (q ? it.b + " – " : "") + (it.g || "أصناف");
+      if (grp !== lastGroup) {
+        const g = document.createElement("li"); g.className = "pg"; g.textContent = grp; pList.appendChild(g); lastGroup = grp;
+      }
       const li = document.createElement("li");
-      const txt = document.createElement("span"); txt.className = "p-txt";
-      txt.textContent = p.label;
-      if (p.code) { const sm = document.createElement("small"); sm.textContent = p.code; txt.appendChild(sm); }
-      const q = document.createElement("input");
-      q.type = "number"; q.min = "1"; q.value = p.qty; q.setAttribute("aria-label", "الكمية");
-      q.addEventListener("input", () => { p.qty = Math.max(1, parseInt(q.value, 10) || 1); });
-      const del = document.createElement("button");
-      del.type = "button"; del.className = "p-del"; del.textContent = "×"; del.setAttribute("aria-label", "شيل الصنف");
-      del.addEventListener("click", () => { picked.splice(idx, 1); renderPicked(); });
-      li.append(txt, q, del); pList.appendChild(li);
+      if (qtys[i] > 0) li.classList.add("has-qty");
+      const txt = document.createElement("label"); txt.className = "pi-txt"; txt.htmlFor = "q" + i;
+      txt.textContent = it.n;
+      if (it.c) { const sm = document.createElement("small"); sm.textContent = it.c; txt.appendChild(sm); }
+      const inp = document.createElement("input");
+      inp.type = "number"; inp.min = "0"; inp.inputMode = "numeric"; inp.id = "q" + i; inp.placeholder = "0";
+      if (qtys[i] > 0) inp.value = qtys[i];
+      inp.addEventListener("input", () => {
+        const v = parseInt(inp.value, 10);
+        qtys[i] = v > 0 ? v : 0;
+        li.classList.toggle("has-qty", qtys[i] > 0);
+        document.getElementById("picker").classList.remove("invalid-box");
+        updateSummary();
+      });
+      li.append(txt, inp); pList.appendChild(li); count++;
     });
-    pEmpty.hidden = picked.length > 0;
+    if (!count) {
+      const e = document.createElement("li"); e.className = "pick-empty";
+      e.textContent = "مفيش صنف بالاسم ده – اكتبه في الملاحظات تحت"; pList.appendChild(e);
+    }
   }
-
-  if (pItem) {
-    fillItems();
-    pSearch.addEventListener("input", fillItems);
-    pBrand.addEventListener("change", fillItems);
-    pAdd.addEventListener("click", () => {
-      const it = ITEMS[pItem.value];
-      if (!it) { pItem.focus(); return; }
-      const qty = Math.max(1, parseInt(pQty.value, 10) || 1);
-      const existing = picked.find((p) => p.idx === Number(pItem.value));
-      if (existing) existing.qty += qty;
-      else picked.push({ idx: Number(pItem.value), label: it.b + " – " + it.n, code: it.c, qty });
-      document.getElementById("picker").classList.remove("invalid-box");
-      pQty.value = 1; pItem.value = ""; renderPicked();
-    });
-    renderPicked();
+  if (pList) {
+    tabs.forEach((t) => t.addEventListener("click", () => {
+      curBrand = t.dataset.brand; pSearch.value = "";
+      tabs.forEach((x) => { x.classList.toggle("is-active", x === t); x.setAttribute("aria-selected", x === t); });
+      renderList();
+    }));
+    pSearch.addEventListener("input", renderList);
+    renderList(); updateSummary();
   }
 
   // ----- نموذج التواصل -----
@@ -197,7 +213,8 @@ document.addEventListener("DOMContentLoaded", () => {
       if (!/^01[0125]\d{8}$/.test(phone.replace(/\s/g, ""))) errors.push(form.phone);
       const pickerBox = document.getElementById("picker");
       if (pickerBox) pickerBox.classList.remove("invalid-box");
-      if (!message && !picked.length) {
+      const chosen = pList ? picked() : [];
+      if (!message && !chosen.length) {
         if (pickerBox) { pickerBox.classList.add("invalid-box"); errors.push(pSearch); }
         else errors.push(form.message);
       }
@@ -214,9 +231,10 @@ document.addEventListener("DOMContentLoaded", () => {
         `*${form.type.value}* - من موقع سبيشيال بارتس\n` +
         `الاسم: ${name}\n` +
         `الموبايل: ${phone}\n` +
-        `المحافظة: ${form.city.value || "غير محدد"}\n\n` +
-        (picked.length
-          ? "*الأصناف المطلوبة:*\n" + picked.map((p, i) => `${i + 1}) ${p.label}${p.code ? " (" + p.code + ")" : ""} — الكمية: ${p.qty}`).join("\n") + "\n\n"
+        `المحافظة: ${form.city.value || "غير محدد"}\n` +
+        (form.address && form.address.value.trim() ? `العنوان: ${form.address.value.trim()}\n` : "") + "\n" +
+        (chosen.length
+          ? "*الأصناف المطلوبة:*\n" + chosen.map((p, i) => `${i + 1}) ${p.it.b} – ${p.it.n}${p.it.c ? " (" + p.it.c + ")" : ""} — الكمية: ${p.qty}`).join("\n") + "\n\n"
           : "") +
         (message ? `ملاحظات: ${message}` : "");
 
@@ -228,7 +246,7 @@ document.addEventListener("DOMContentLoaded", () => {
       status.className = "form-status success";
       status.textContent = "تمام! اتفتح واتساب ورسالتك جاهزة، دوس إرسال من هناك.";
       form.reset();
-      picked.length = 0; if (pItem) { fillItems(); renderPicked(); }
+      Object.keys(qtys).forEach((k) => delete qtys[k]); if (pList) { renderList(); updateSummary(); }
     });
   }
 });
