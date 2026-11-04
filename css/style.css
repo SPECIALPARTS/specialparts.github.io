@@ -501,3 +501,19 @@ img { max-width: 100%; display: block; }
 .order-box ol { padding-right: 20px; list-style: decimal; margin-top: 4px; font-size: .92rem; line-height: 1.6; }
 .order-box .oc { color: var(--muted); font-size: .85rem; direction: ltr; }
 .order-box .oq { display: inline-block; background: var(--primary); color: #fff; border-radius: 6px; padding: 0 8px; font-size: .85rem; margin-right: 4px; }
+/* الكمية المطلوبة قبل زرار الواتساب */
+.p-qty { margin-top: auto; display: flex; flex-direction: column; gap: 4px; padding-top: 6px; }
+.p-qty-label { font-size: .8rem; font-weight: 700; color: var(--muted); }
+.p-qty-ctrl { display: flex; align-items: stretch; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; background: #fff; }
+.p-qty-ctrl input { flex: 1; min-width: 0; width: 100%; border: 0; text-align: center; font: inherit; font-weight: 800; font-size: 1rem; padding: 6px 4px; color: var(--primary); -moz-appearance: textfield; }
+.p-qty-ctrl input::-webkit-outer-spin-button, .p-qty-ctrl input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+.p-qty-ctrl input:focus { outline: none; background: var(--bg-alt); }
+.p-qty-btn { width: 38px; border: 0; background: var(--bg-alt); color: var(--primary); font-size: 1.2rem; font-weight: 800; cursor: pointer; }
+.p-qty-btn:hover { background: #e6ebf5; }
+.p-qty + .p-wa { margin-top: 6px; }
+.p-wa.is-off { background: #c9ced6; color: #fff; cursor: not-allowed; }
+.p-wa.is-off:hover { background: #c9ced6; }
+.p-qty-shake { animation: pQtyShake .35s; }
+.p-qty-shake .p-qty-ctrl { border-color: #e0a100; }
+@keyframes pQtyShake { 0%,100% { transform: translateX(0); } 25% { transform: translateX(-4px); } 75% { transform: translateX(4px); } }
+@media (max-width: 560px) { .p-qty-btn { width: 32px; } .p-qty-ctrl input { font-size: .95rem; } }
