@@ -115,10 +115,12 @@
   <!-- الخطوط -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
 
   <!-- ملف التنسيق -->
   <link rel="stylesheet" href="css/style.css">
+  <!-- التصميم الجديد (نوفمبر 2026) – فوق الملف القديم -->
+  <link rel="stylesheet" href="css/premium.css">
 
   <!-- ===================== Meta (Facebook) Pixel ===================== -->
   <!-- حط رقم البكسل بتاعك بين علامتي التنصيص في السطر اللي تحت (أرقام بس، مثال: "123456789012345")
@@ -142,7 +144,7 @@
 </head>
 <body>
 
-  <!-- ===================== الهيدر ===================== -->
+  <!-- ===================== الهيدر (نفس الكلاسات عشان main.js) ===================== -->
   <header class="site-header">
     <div class="container header-inner">
       <a href="index.html" class="logo" aria-label="سبيشيال بارتس - الرئيسية">
@@ -157,8 +159,8 @@
       <nav class="main-nav">
         <ul>
           <li><a href="#home" class="active">الرئيسية</a></li>
-          <li><a href="#services">خدماتنا</a></li>
-          <li><a href="products.html">منتجاتنا</a></li>
+          <li><a href="products.html">المنتجات</a></li>
+          <li><a href="#services">الماركات</a></li>
           <li><a href="#partners">شركاء النجاح</a></li>
           <li><a href="#coverage">مناطق التوزيع</a></li>
           <li><a href="#contact" class="btn btn-sm">تواصل معنا</a></li>
@@ -169,201 +171,173 @@
 
   <main>
 
-    <!-- ===================== القسم الترحيبي ===================== -->
-    <section id="home" class="hero">
-      <div class="container hero-inner">
-        <div class="hero-content">
-          <span class="badge">أهلًا بكم في سبيشيال بارتس</span>
-          <h1>شريكك الموثوق في توريد <span class="highlight">قطع غيار السيارات</span> والنقل الثقيل بالجملة</h1>
-          <p>
-            نوفّر للتجار ومحلات قطع الغيار والورش وأساطيل النقل منتجات أصلية بأسعار جملة منافسة،
-            مع توزيع منتظم يغطي محافظات الصعيد من مقرنا الرئيسي في المنيا.
-          </p>
-          <div class="hero-actions">
-            <a href="#contact" class="btn">اطلب عرض سعر</a>
-            <a href="#services" class="btn btn-outline">تعرّف على خدماتنا</a>
-          </div>
-          <div class="hero-stats">
-            <div class="stat"><strong>6</strong><span>محافظات نغطيها</span></div>
-            <div class="stat"><strong>جملة</strong><span>أسعار خاصة للتجار</span></div>
-            <div class="stat"><strong>المنيا</strong><span>مركز التوزيع</span></div>
+    <!-- ===================== الهيرو ===================== -->
+    <section id="home" class="pm-hero">
+      <div class="container pm-hero-inner">
+        <div class="pm-hero-text pm-reveal">
+          <span class="pm-badge">موزع معتمد في محافظات الصعيد</span>
+          <h1>قطع غيار النقل الثقيل.<br><span>بالجملة.</span></h1>
+          <p>فلاتر SAMPIYON وEurostar وقطع غيار فتيس HYGT للتجار ومحلات قطع الغيار والورش وأساطيل النقل، بتوزيع منتظم من مقرنا في المنيا لحد قنا.</p>
+          <div class="pm-actions">
+            <a href="products.html" class="pm-btn pm-btn-blue">تصفّح المنتجات</a>
+            <a href="https://wa.me/201130151717?text=%D8%A3%D9%87%D9%84%D8%A7%D9%8B%20%D8%B3%D8%A8%D9%8A%D8%B4%D9%8A%D8%A7%D9%84%20%D8%A8%D8%A7%D8%B1%D8%AA%D8%B3%D8%8C%20%D8%B9%D9%86%D8%AF%D9%8A%20%D8%A7%D8%B3%D8%AA%D9%81%D8%B3%D8%A7%D8%B1" class="pm-btn pm-btn-ghost" target="_blank" rel="noopener">ابعت رقم القطعة على واتساب</a>
           </div>
         </div>
-
-        <div class="hero-media">
-          <img src="images/hero.jpg" alt="فلاتر Sampiyon في مخزن سبيشيال بارتس" width="1200" height="675">
+        <div class="pm-hero-media pm-reveal">
+          <div class="pm-hero-frame">
+            <!-- فيديو صامت في لوب – الصورة بتظهر لحد ما الفيديو يحمّل -->
+            <video autoplay muted loop playsinline preload="metadata" poster="images/hero-truck.jpg" aria-label="عربية نقل تقيل ماشية على طريق زراعي">
+              <source src="images/hero-truck.mp4" type="video/mp4">
+            </video>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- ===================== شريط الثقة ===================== -->
-    <section class="trust-bar">
-      <div class="container trust-inner">
-        <span>موزع معتمد لفلاتر شامبيون SAMPIYON</span>
-        <span>موزع معتمد لفلاتر يوروستار Eurostar</span>
-        <span>موزع معتمد لقطع غيار فتيس HYGT</span>
+    <!-- ===================== أرقام الثقة ===================== -->
+    <section class="pm-stats" aria-label="سبيشيال بارتس بالأرقام">
+      <div class="container pm-stats-grid">
+        <div class="pm-stat"><b data-pm-count="6">6</b><span>محافظات بنغطيها</span></div>
+        <div class="pm-stat"><b data-pm-count="160" data-pm-prefix="+">+160</b><span>صنف بالصور على الموقع</span></div>
+        <div class="pm-stat"><b data-pm-count="3">3</b><span>ماركات – موزع معتمد</span></div>
+        <div class="pm-stat"><b>المنيا</b><span>مركز التوزيع</span></div>
       </div>
     </section>
 
-    <!-- ===================== نبذة عن الخدمات ===================== -->
-    <section id="services" class="section">
+    <!-- ===================== الماركات ===================== -->
+    <section id="services" class="pm-section pm-light">
       <div class="container">
-        <div class="section-head">
-          <span class="eyebrow">خدماتنا</span>
-          <h2>كل اللي يحتاجه محلك أو أسطولك في مكان واحد</h2>
-          <p>نقدّم حلول توريد متكاملة تبدأ من اختيار الصنف المناسب وتنتهي بوصول البضاعة لباب محلك</p>
+        <div class="pm-head pm-center pm-reveal">
+          <h2 class="pm-h2">اختار من الماركة.</h2>
+          <p class="pm-lead">نبدأ بالفلاتر وقطع غيار فتيس النقل الثقيل، ونتوسع تدريجيًا في باقي قطع الغيار.</p>
         </div>
-
-        <div class="services">
-          <article class="service">
-            <div class="service-icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24"><path d="M3 7l9-4 9 4-9 4-9-4zm0 5l9 4 9-4M3 17l9 4 9-4"/></svg>
-            </div>
-            <h3>البيع بالجملة</h3>
-            <p>كميات تجارية بأسعار جملة منافسة وخصومات خاصة حسب حجم الطلب والتعامل المستمر.</p>
-          </article>
-
-          <article class="service">
-            <div class="service-icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24"><path d="M12 2l3 6 6 .9-4.5 4.3 1 6.3L12 16.8 6.5 19.5l1-6.3L3 8.9 9 8z"/></svg>
-            </div>
-            <h3>موزع معتمد</h3>
-            <p>موزع معتمد في الصعيد لعلامات تجارية موثوقة زي فلاتر شامبيون SAMPIYON التركي ويوروستار Eurostar وقطع غيار فتيس HYGT، بضاعة أصلية مضمونة من الوكيل مباشرةً، وبنضيف أصناف جديدة باستمرار.</p>
-          </article>
-
-          <article class="service">
-            <div class="service-icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24"><path d="M1 6h13v10H1zM14 10h5l4 4v2h-9zM5.5 19a1.5 1.5 0 100-3 1.5 1.5 0 000 3zM18.5 19a1.5 1.5 0 100-3 1.5 1.5 0 000 3z"/></svg>
-            </div>
-            <h3>توزيع وتوصيل</h3>
-            <p>خطوط توزيع منتظمة من المنيا تغطي بني سويف والفيوم وحتى قنا، لتصلك البضاعة في موعدها.</p>
-          </article>
-
-          <article class="service">
-            <div class="service-icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24"><path d="M14.7 6.3a4 4 0 00-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 005.4-5.4l-2.5 2.5-2.4-.6-.6-2.4z"/></svg>
-            </div>
-            <h3>دعم فني في اختيار القطعة</h3>
-            <p>فريق متخصص يساعدك في تحديد الفلتر أو قطعة الفتيس المناسبة لكل موديل ونوع مركبة.</p>
-          </article>
-
-          <article class="service">
-            <div class="service-icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24"><path d="M6 2h9l5 5v15H6zM14 2v6h6M9 13h8M9 17h8"/></svg>
-            </div>
-            <h3>عروض أسعار سريعة</h3>
-            <p>ابعت لنا قائمة احتياجاتك واستلم عرض سعر تفصيلي في أسرع وقت.</p>
-          </article>
-
-          <article class="service">
-            <div class="service-icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24"><path d="M12 2l8 3v6c0 5-3.4 9.4-8 11-4.6-1.6-8-6-8-11V5z M8.5 12l2.5 2.5 4.5-5"/></svg>
-            </div>
-            <h3>جودة مضمونة</h3>
-            <p>منتجات أصلية من مصادر معتمدة، مع متابعة ما بعد البيع لضمان رضاك.</p>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <!-- ===================== المنتجات ===================== -->
-    <section id="products" class="section section-alt">
-      <div class="container">
-        <div class="section-head">
-          <span class="eyebrow">منتجاتنا</span>
-          <h2>تركيزنا الحالي</h2>
-          <p>نبدأ بالفلاتر وقطع غيار فتيس النقل الثقيل، ونتوسع تدريجيًا في باقي قطع الغيار</p>
-        </div>
-        <div class="cards">
-          <article class="card">
-            <img src="images/brand-sampiyon.jpg" alt="فلاتر SAMPIYON التركية لمرسيدس وأكتروس ومان وسكانيا" class="card-img card-img-contain" loading="lazy">
-            <div class="card-tag">موزع معتمد</div>
-            <h3>فلاتر شامبيون SAMPIYON التركية</h3>
+        <div class="pm-brand-grid">
+          <a href="products.html#sampiyon" class="pm-brand-card pm-reveal">
+            <span class="pm-tag">موزع معتمد</span>
+            <h3>فلاتر SAMPIYON</h3>
             <p>فلاتر زيت وجاز وهواء وتكييف بجودة تركية للنقل الثقيل.</p>
-            <ul>
-              <li>مرسيدس وأكتروس</li>
-              <li>مان وسكانيا وفولفو</li>
-            </ul>
-            <a href="products.html#sampiyon" class="card-link">شوف كل أصناف شامبيون SAMPIYON ←</a>
-          </article>
-          <article class="card">
-            <img src="images/brand-eurostar.jpg" alt="فلاتر Eurostar لمرسيدس أكتروس" class="card-img card-img-contain" loading="lazy">
-            <div class="card-tag">موزع معتمد</div>
-            <h3>فلاتر يوروستار Eurostar</h3>
-            <p>تشكيلة فلاتر Eurostar Germany الكاملة لمرسيدس أكتروس.</p>
-            <ul>
-              <li>زيت وجاز وهواء</li>
-              <li>تكييف وفاصل ونشادر AdBlue</li>
-            </ul>
-            <a href="products.html#eurostar" class="card-link">شوف كل أصناف يوروستار Eurostar ←</a>
-          </article>
-          <article class="card">
-            <img src="images/brand-hygt.jpg" alt="قطع غيار فتيس HYGT للنقل الثقيل" class="card-img card-img-contain" loading="lazy">
-            <div class="card-tag">موزع معتمد</div>
+            <img src="images/products/official-sampiyon-CR0099.jpg" alt="فلتر هواء أكتروس 2 MB بفيبر SAMPIYON CR 0099" width="400" height="400" loading="lazy">
+            <span class="pm-more">شوف الأصناف ←</span>
+          </a>
+          <a href="products.html#hygt" class="pm-brand-card pm-reveal">
+            <span class="pm-tag">موزع معتمد</span>
             <h3>قطع غيار فتيس HYGT</h3>
-            <p>قطع غيار فتيس (ناقل الحركة) للنقل الثقيل بجودة عالية.</p>
-            <ul>
-              <li>براميل وفرامل وتروس وبلي</li>
-              <li>فتيس مرسيدس أكتروس ومان</li>
-            </ul>
-            <a href="products.html#hygt" class="card-link">شوف كل أصناف فتيس HYGT ←</a>
-          </article>
-          <article class="card">
-            <div class="card-img card-img-empty">قطع غيار وجنوط<small>تشكيلة بتكبر باستمرار</small></div>
-            <div class="card-tag">تشكيلة متنوعة</div>
-            <h3>قطع الغيار والجنوط</h3>
-            <p>تشكيلة من قطع غيار السيارات والجنوط من مصادر معتمدة، ونضيف أصناف جديدة باستمرار.</p>
-            <ul>
-              <li>قطع غيار متنوعة</li>
-              <li>جنوط بمقاسات مختلفة</li>
-            </ul>
-          </article>
+            <p>براميل وفرامل وتروس وبلي – فتيس مرسيدس أكتروس ومان.</p>
+            <img src="images/products/official-hygt-3892627910.jpg" alt="ترس رابع 36 سنة 240 MP1 HYGT 7910" width="400" height="400" loading="lazy">
+            <span class="pm-more">شوف الأصناف ←</span>
+          </a>
+          <a href="products.html#eurostar" class="pm-brand-card pm-reveal">
+            <span class="pm-tag">موزع معتمد</span>
+            <h3>فلاتر Eurostar</h3>
+            <p>تشكيلة فلاتر Eurostar Germany لمرسيدس أكتروس.</p>
+            <img src="images/products/r2-es2404.jpg" alt="هواء MP2 بفيبر Eurostar ES2404" width="400" height="400" loading="lazy">
+            <span class="pm-more">شوف الأصناف ←</span>
+          </a>
         </div>
-        <div class="center-cta"><a href="products.html" class="btn">شوف كل المنتجات بالصور (أكتر من 160 صنف)</a></div>
+      </div>
+    </section>
+
+    <!-- ===================== الأكتروس ===================== -->
+    <section id="actros" class="pm-section">
+      <div class="container pm-split">
+        <div class="pm-split-media pm-reveal">
+          <img src="images/hero-truck.jpg" alt="عربية نقل تقيل على الطريق" loading="lazy">
+        </div>
+        <div class="pm-split-text pm-reveal">
+          <span class="pm-eyebrow">مرسيدس أكتروس</span>
+          <h2 class="pm-h2">كل اللي يحتاجه الأكتروس.<br>في مكان واحد.</h2>
+          <p class="pm-lead">فلاتر وقطع غيار فتيس لعربيات مرسيدس أكتروس – بنفس الأكواد المكتوبة في صفحة المنتجات.</p>
+          <div class="pm-chips">
+            <span class="pm-chip">طقم فلتر زيت أكتروس 1/2/3 MB · <span class="pm-mono">CE 1130 EX</span></span>
+            <span class="pm-chip">فلتر هواء أكتروس 2 MB · <span class="pm-mono">CR 0099</span></span>
+            <span class="pm-chip">فلتر جاز 2 مرحلة 4 MB · <span class="pm-mono">CE 0373 MEX KIT</span></span>
+            <span class="pm-chip">فرملة السرعة الأولى / الثانية أكتروس · <span class="pm-mono">HYGT 1945</span></span>
+          </div>
+          <a href="products.html" class="pm-link">كل أصناف الأكتروس ←</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== HYGT ===================== -->
+    <section id="products" class="pm-section pm-navy">
+      <div class="container">
+        <div class="pm-row-head pm-reveal">
+          <div>
+            <span class="pm-logo-chip"><img src="images/logo-hygt.png" alt="شعار HYGT" width="700" height="189"></span>
+            <h2 class="pm-h2">قطع غيار الفتيس.<br>بدقة الترس.</h2>
+            <p class="pm-lead">قطع غيار فتيس (ناقل الحركة) للنقل الثقيل – براميل وفرامل وتروس وبلي.</p>
+          </div>
+          <a href="products.html#hygt" class="pm-btn pm-btn-white">كل أصناف HYGT</a>
+        </div>
+        <div class="pm-product-grid">
+          <div class="pm-product pm-reveal"><img src="images/products/official-hygt-3892627910.jpg" alt="ترس رابع 36 سنة 240 MP1 HYGT 7910" width="400" height="400" loading="lazy"><b>ترس رابع 36 سنة 240 MP1</b><span class="pm-mono">HYGT 7910</span></div>
+          <div class="pm-product pm-reveal"><img src="images/products/official-hygt-3892621413.jpg" alt="ترس ثالث 28 سنة فتيس HYGT 1413" width="400" height="400" loading="lazy"><b>ترس ثالث 28 سنة فتيس</b><span class="pm-mono">HYGT 1413</span></div>
+          <div class="pm-product pm-reveal"><img src="images/products/official-hygt-0750118220.jpg" alt="بلية رابع فتيس 160 HYGT 8220" width="400" height="400" loading="lazy"><b>بلية رابع فتيس 160</b><span class="pm-mono">HYGT 8220</span></div>
+          <div class="pm-product pm-reveal"><img src="images/products/official-hygt-1295304278.jpg" alt="غويشة تعشيق ثالث رابع HYGT 278" width="400" height="400" loading="lazy"><b>غويشة تعشيق ثالث رابع</b><span class="pm-mono">HYGT 278</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== SAMPIYON و Eurostar ===================== -->
+    <section class="pm-section pm-white">
+      <div class="container pm-duo">
+        <div class="pm-duo-card pm-reveal">
+          <span class="pm-dark-chip"><img src="images/logo-sampiyon-white.png" alt="شعار SAMPIYON" width="368" height="150"></span>
+          <h3>فلاتر تركية.<br>للطريق الطويل.</h3>
+          <p>مرسيدس وأكتروس · مان وسكانيا وفولفو.</p>
+          <div class="pm-mini-grid">
+            <a href="products.html#sampiyon" class="pm-mini"><img src="images/products/official-sampiyon-CR0099.jpg" alt="SAMPIYON CR 0099" loading="lazy"><span>CR 0099</span></a>
+            <a href="products.html#sampiyon" class="pm-mini"><img src="images/products/official-sampiyon-CH1321.jpg" alt="SAMPIYON CH 1321" loading="lazy"><span>CH 1321</span></a>
+            <a href="products.html#sampiyon" class="pm-mini"><img src="images/products/official-sampiyon-CE0373MEXKIT.jpg" alt="SAMPIYON CE 0373 MEX KIT" loading="lazy"><span>CE 0373 MEX KIT</span></a>
+          </div>
+        </div>
+        <div class="pm-duo-card pm-reveal">
+          <span class="pm-wordmark">EUROSTAR</span>
+          <h3>تشكيلة كاملة.<br>للأكتروس.</h3>
+          <p>زيت وجاز وهواء · تكييف وفاصل ونشادر AdBlue.</p>
+          <div class="pm-mini-grid">
+            <a href="products.html#eurostar" class="pm-mini"><img src="images/products/r2-es2404.jpg" alt="Eurostar ES2404" loading="lazy"><span>ES2404</span></a>
+            <a href="products.html#eurostar" class="pm-mini"><img src="images/products/001.jpg" alt="Eurostar ES0004" loading="lazy"><span>ES0004</span></a>
+          </div>
+        </div>
       </div>
     </section>
 
     <!-- ===================== شركاء النجاح ===================== -->
-    <section id="partners" class="section section-alt partners-section">
+    <section id="partners" class="pm-section">
       <div class="container">
-        <div class="section-head">
-          <span class="eyebrow">شركاء النجاح</span>
-          <h2>الوكيل الحصري بمصر: شركة أبو الدهب جروب</h2>
-          <p>عشان كده البضاعة اللي عندنا أصلية ومضمونة، وبتوصلك بسعر الجملة في الصعيد</p>
+        <div class="pm-head pm-center pm-reveal">
+          <h2 class="pm-h2">بضاعة أصلية. من مصدرها.</h2>
         </div>
-        <article class="partner-card">
-          <img src="images/partner-abueldahab.jpg" alt="لوجو شركة أبو الدهب جروب" class="partner-logo" loading="lazy" width="110" height="110">
-          <div class="partner-body">
-            <h3>شركة أبو الدهب جروب <span dir="ltr">Abu Eldahab Group</span></h3>
-            <p class="partner-sub">شركة أبو الدهب للتجارة والاستيراد – متخصصين في قطع غيار النقل الثقيل والمعدات، بخبرة من سنة 1998</p>
-            <ul class="partner-facts">
-              <li><strong>الوكيل الحصري بمصر</strong> لفلاتر شامبيون SAMPIYON التركي وفلاتر يوروستار Eurostar وقطع غيار فتيس HYGT</li>
-              <li><strong>سبيشيال بارتس</strong> الموزع المعتمد لمنتجاتهم في محافظات الصعيد</li>
-            </ul>
+        <div class="pm-partner pm-reveal">
+          <img src="images/partner-abueldahab.jpg" alt="شعار شركة أبو الدهب جروب" width="220" height="220" loading="lazy">
+          <div>
+            <h3>شركة أبو الدهب جروب – Abu Eldahab Group</h3>
+            <p>الوكيل الحصري بمصر لفلاتر شامبيون SAMPIYON التركي وفلاتر يوروستار Eurostar وقطع غيار فتيس HYGT. وسبيشيال بارتس الموزع المعتمد لمنتجاتهم في محافظات الصعيد.</p>
           </div>
-        </article>
+        </div>
+        <div class="pm-photo-grid">
+          <img class="pm-reveal" src="images/brand-sampiyon.jpg" alt="فلتر SAMPIYON في كرتونته" loading="lazy">
+          <img class="pm-reveal" src="images/brand-hygt.jpg" alt="قطعة HYGT في تغليفها" loading="lazy">
+          <img class="pm-reveal" src="images/brand-eurostar.jpg" alt="فلتر Eurostar في كرتونته" loading="lazy">
+        </div>
       </div>
     </section>
 
     <!-- ===================== مناطق التوزيع ===================== -->
-    <section id="coverage" class="section">
-      <div class="container">
-        <div class="section-head">
-          <span class="eyebrow">مناطق التوزيع</span>
-          <h2>نغطي محافظات الصعيد</h2>
-          <p>من مقرنا الرئيسي في المنيا إلى عملائنا من بني سويف حتى قنا</p>
-        </div>
-        <ul class="regions">
+    <section id="coverage" class="pm-section" style="border-top: 1px solid #1F232B">
+      <div class="container pm-reveal">
+        <h2 class="pm-h2">من المنيا… لحد قنا.</h2>
+        <ol class="pm-route">
           <li>بني سويف</li>
           <li>الفيوم</li>
-          <li class="hq">المنيا <small>المقر الرئيسي</small></li>
+          <li class="pm-hq">المنيا<small>المقر الرئيسي</small></li>
           <li>أسيوط</li>
           <li>سوهاج</li>
           <li>قنا</li>
-        </ul>
+        </ol>
       </div>
     </section>
-
     <!-- ===================== قسم التواصل ===================== -->
     <section id="contact" class="section contact-section">
       <div class="container">
@@ -501,7 +475,7 @@
         <h4>روابط سريعة</h4>
         <ul>
           <li><a href="#home">الرئيسية</a></li>
-          <li><a href="#services">خدماتنا</a></li>
+          <li><a href="#services">الماركات</a></li>
           <li><a href="products.html">منتجاتنا</a></li>
           <li><a href="#contact">تواصل معنا</a></li>
         </ul>
@@ -541,5 +515,6 @@
   <!-- ملف الجافاسكريبت -->
   <script src="js/items-data.js"></script>
   <script src="js/main.js"></script>
+  <script src="js/premium.js"></script>
 </body>
 </html>
